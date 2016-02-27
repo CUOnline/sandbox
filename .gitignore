@@ -1,0 +1,12 @@
+/log
+/tmp
+
+# Config containing sensitive data
+settings.yml
+
+# Environment normalization
+/.bundle
+/vendor/bundle
+
+# Debugger command history
+.byebug_history

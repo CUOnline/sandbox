@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+div.row
+  - if @success
+    p
+      | Course Created. 
+      a target='_parent' href='https://ucdenver.instructure.com/courses' Go to courses page
+  - else
+    - if not @authorized
+        p You are not authorized to create a sandbox
+    - else
+        p An error occurred
+        == @e.inspect
