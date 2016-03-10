@@ -2,7 +2,7 @@
 /tmp
 
 # Config containing sensitive data
-settings.yml
+config.yml
 
 # Environment normalization
 /.bundle
