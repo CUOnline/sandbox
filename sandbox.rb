@@ -32,7 +32,8 @@ class Sandbox < Wolf::Base
         @success = true
       end
     rescue Exception => e
-      @e = e.inspect
+      settings.request_log.fatal(e.to_s)
+      settings.request_log.fatal(e.backtrace.join("\n\t"))
     end
 
     headers 'X-Frame-Options' => "ALLOW-FROM #{settings.embeddable_domains}"
