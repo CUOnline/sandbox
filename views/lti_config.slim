@@ -3,13 +3,13 @@
     <blti:title>Sandbox Creator</blti:title>
     <blti:description>Add user navigation link to create a sandbox course</blti:description>
     <blti:icon></blti:icon>
-    <blti:launch_url>https://thewolf-dev.cuonline.edu/sandbox</blti:launch_url>
+    <blti:launch_url>https://#{env["HTTP_HOST"]}#{mount_point}</blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
       <lticm:property name="tool_id">sandbox_creator</lticm:property>
       <lticm:property name="privacy_level">public</lticm:property>
-      <lticm:property name="domain">https://thewolf-dev.cuonline.edu</lticm:property>
+      <lticm:property name="domain">https://#{env["HTTP_HOST"]}</lticm:property>
       <lticm:options name="user_navigation">
-        <lticm:property name="url">https://thewolf-dev.cuonline.edu/sandbox</lticm:property>
+        <lticm:property name="url">https://#{env["HTTP_HOST"]}#{mount_point}</lticm:property>
         <lticm:property name="text">Create Sandbox</lticm:property>
         <lticm:property name="enabled">true</lticm:property>
       </lticm:options>

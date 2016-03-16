@@ -4,7 +4,8 @@ div.row
   - if @success
     p
       | Course Created. 
-      a target='_parent' href='https://ucdenver.instructure.com/courses' Go to courses page
+      a [target='_parent' href='https://#{settings.canvas_url}/courses']
+        | Go to courses page
   - else
     - if not @authorized
         p You are not authorized to create a sandbox
