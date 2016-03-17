@@ -36,7 +36,7 @@ class Sandbox < Wolf::Base
       settings.request_log.fatal(e.backtrace.join("\n\t"))
     end
 
-    headers 'X-Frame-Options' => "ALLOW-FROM #{settings.embeddable_domains}"
+    headers 'X-Frame-Options' => "ALLOW-FROM #{settings.canvas_url}"
     slim :index, :layout => false
   end
 
