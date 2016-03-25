@@ -1,4 +1,4 @@
-class Sandbox < Wolf::Base
+class SandboxApp < Wolf::Base
   set :root, File.dirname(__FILE__)
   self.setup
 
@@ -32,15 +32,15 @@ class Sandbox < Wolf::Base
         @success = true
       end
     rescue Exception => e
-      settings.request_log.fatal(e.to_s)
-      settings.request_log.fatal(e.backtrace.join("\n\t"))
+      settings.error_log.fatal(e.to_s)
+      settings.error_log.fatal(e.backtrace.join("\n\t"))
     end
 
     headers 'X-Frame-Options' => "ALLOW-FROM #{settings.canvas_url}"
     slim :index, :layout => false
   end
 
-  get '/lti_config' do
+  get '/' do
     headers 'Content-Type' => 'text/xml'
     slim :lti_config, :layout => false
   end
