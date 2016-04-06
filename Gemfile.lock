@@ -1,13 +1,18 @@
 GIT
-  remote: https://github.com/CUOnline/wolf
-  revision: fb55d10e0ea31ca7bc15e302f21024ecbb9bb706
+  remote: https://github.com/CUOnline/wolf_core
+  revision: b965633c2d02e45145b0b1aa9d17d2c88a1806e9
   specs:
-    wolf (0.0.1)
+    wolf_core (0.0.1)
+      byebug (~> 8.2)
       dbd-odbc (~> 0.2)
       dbi (~> 0.4)
       json (~> 1.8)
       mail (~> 2.6)
+      minitest (~> 5.8)
+      minitest-rg (~> 5.2)
+      mocha (~> 1.1)
       rack-ssl-enforcer (~> 0.2)
+      rake (~> 10.5)
       resque (~> 1.25)
       rest-client (~> 1.8)
       ruby-odbc (~> 0.99997)
@@ -21,12 +26,13 @@ GEM
   specs:
     backports (3.6.8)
     builder (3.2.2)
+    byebug (8.2.2)
     dbd-odbc (0.2.5)
       dbi (>= 0.4.0)
     dbi (0.4.5)
       deprecated (= 2.0.1)
     deprecated (2.0.1)
-    domain_name (0.5.20160216)
+    domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -34,9 +40,15 @@ GEM
       builder
       oauth (~> 0.4.5)
     json (1.8.3)
-    mail (2.6.3)
-      mime-types (>= 1.16, < 3)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
+    metaclass (0.0.4)
     mime-types (2.99.1)
+    minitest (5.8.4)
+    minitest-rg (5.2.0)
+      minitest (~> 5.0)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     mono_logger (1.1.0)
     multi_json (1.11.2)
     netrc (0.11.0)
@@ -47,10 +59,11 @@ GEM
     rack-ssl-enforcer (0.2.9)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (10.5.0)
     redis (3.2.2)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
-    resque (1.25.2)
+    resque (1.26.0)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.3)
@@ -92,7 +105,7 @@ PLATFORMS
 
 DEPENDENCIES
   ims-lti
-  wolf!
+  wolf_core!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
