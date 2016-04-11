@@ -8,36 +8,38 @@ class SandboxApp < WolfCore::App
   self.setup
 
   post '/' do
-    begin
-      if params['oauth_consumer_key'] == settings.consumer_key &&
-        (params['ext_roles'].include?('Administrator') ||
-         params['ext_roles'].include?('Instructor'))
+    # Verify OAuth signature
+    provider = IMS::LTI::ToolProvider.new(settings.consumer_key,
+                                          settings.shared_secret,
+                                          params)
 
-        # Verify OAuth signature
-        provider = IMS::LTI::ToolProvider.new(settings.consumer_key, settings.shared_secret, params)
-        @authorized = provider.valid_request?(request)
+    if provider.valid_request?(request) &&
+      (params['ext_roles'].include?('Administrator') ||
+       params['ext_roles'].include?('Instructor'))
 
-        url = "accounts/#{settings.sandbox_account_id}/courses"
-        payload = {
-          'course' => {
-            'name' => "sandbox_#{params['lis_person_name_full'].gsub(/ /, '_')}"
-          }
+      url = "accounts/#{settings.sandbox_account_id}/courses"
+      payload = {
+        'course' => {
+          'name' => "sandbox_#{params['lis_person_name_full'].gsub(/ /, '_')}"
         }
-        course = canvas_api(:post, url, {:payload => payload})
+      }
+      course = canvas_api(:post, url, {:payload => payload})
 
-        url = "courses/#{course['id']}/enrollments"
-        payload = {
-          'enrollment' => {
-            'user_id' => params['custom_canvas_user_id'],
-            'type' => 'TeacherEnrollment'
-          }
+      url = "courses/#{course['id']}/enrollments"
+      payload = {
+        'enrollment' => {
+          'user_id' => params['custom_canvas_user_id'],
+          'type' => 'TeacherEnrollment'
         }
-        canvas_api(:post, url, {:payload => payload})
+      }
+      canvas_api(:post, url, {:payload => payload})
 
-        @success = true
-      end
+      @status = 200
+    else
+      @status = 403
     end
 
+    status @status
     headers 'X-Frame-Options' => "ALLOW-FROM #{settings.canvas_url}"
     slim :index, :layout => false
   end
