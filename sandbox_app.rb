@@ -8,12 +8,7 @@ class SandboxApp < WolfCore::App
   self.setup
 
   post '/' do
-    # Verify OAuth signature
-    provider = IMS::LTI::ToolProvider.new(settings.consumer_key,
-                                          settings.shared_secret,
-                                          params)
-
-    if provider.valid_request?(request) &&
+    if valid_lti_request?(request, params) &&
       (params['ext_roles'].include?('Administrator') ||
        params['ext_roles'].include?('Instructor'))
 

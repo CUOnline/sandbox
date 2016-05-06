@@ -1,0 +1,55 @@
+development: &defaults
+  title: 'Wolf'
+  canvas_url: 'https://ucdenver.beta.instructure.com'
+  api_version: '1'
+
+  # Canvas credentials
+  client_id: 10230000000000123
+  client_secret: 'super-secret-client-secret-string'
+  canvas_token: 'super-secret-canvas-token-string'
+
+  # ODBC Credentials - Requires configured data source and installed drivers
+  db_dsn: 'Data Source Name'
+  db_user: 'database_username'
+  db_pwd: 'database_password'
+
+  # Reque web credientials
+  resque_user: 'resque_web_username'
+  resque_pwd: 'resque_web_password'
+  redis_pwd: 'redis_server_password'
+
+  # Account ID for account level role checking
+  canvas_account_id: 10230000000000011
+  allowed_roles:
+    - 'AccountAdmin'
+    - 'TeacherEnrollment'
+
+  # Logging output
+  resque_log_file: 'log/resque.log'
+  request_log_file: 'log/request.log'
+  auth_log_file: 'log/auth.log'
+
+  # Report email settings
+  email_subject: 'Canvas Data Report'
+  from_email: "Canvas <donotreply@ucdenver.edu>"
+  smtp_server: 'mail.ucdenver.pvt'
+  smtp_port: 25
+
+  # =====================
+  # App Specific Settings
+  # =====================
+  #
+  # Sandbox
+  sandbox_account_id: 10230000000000022
+
+test:
+  <<: *defaults
+  client_id: 10230000000000124
+  client_secret: 'super-secret-client-secret-string-for-test-deployment'
+  canvas_url: 'https://ucdenver.test.instructure.com'
+
+production:
+  <<: *defaults
+  client_id: 10230000000000125
+  client_secret: 'super-secret-client-secret-string-for-production-deployment'
+  canvas_url: 'https://ucdenver.instructure.com'
