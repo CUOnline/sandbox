@@ -24,10 +24,9 @@ development: &defaults
     - 'AccountAdmin'
     - 'TeacherEnrollment'
 
-  # Logging output
-  resque_log_file: 'log/resque.log'
-  request_log_file: 'log/request.log'
-  auth_log_file: 'log/auth.log'
+  # Directories for generated files
+  log_dir: '/var/log'
+  tmp_dir: '/tmp'
 
   # Report email settings
   email_subject: 'Canvas Data Report'

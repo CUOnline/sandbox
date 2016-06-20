@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'ims-lti', "~> 1.1"
 gem 'wolf_core', :git => "https://github.com/cuonline/wolf_core"
+gem 'ims-lti', '~> 1.1'
 
 group :test, :deveopment do
   gem 'byebug', '~> 8.2'

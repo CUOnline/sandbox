@@ -5,7 +5,7 @@ require 'oauth/request_proxy/rack_request'
 
 class SandboxApp < WolfCore::App
   set :root, File.dirname(__FILE__)
-  self.setup
+  set :views, ["#{root}/views", settings.base_views]
 
   post '/' do
     if valid_lti_request?(request, params) &&
