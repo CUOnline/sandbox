@@ -1,8 +1,10 @@
 require_relative '../sandbox_app'
+
 require 'minitest/autorun'
 require 'minitest/rg'
 require 'mocha/mini_test'
 require 'rack/test'
+require 'webmock/minitest'
 
 # Turn on SSL for all requests
 class Rack::Test::Session
@@ -23,6 +25,9 @@ class SandboxAppTest < Minitest::Test
   end
 
   def setup
+    WebMock.enable!
+    WebMock.disable_net_connect!
+
     @canvas_params = {
       'ext_roles' => 'Administrator',
       'oauth_consumer_key' => app.send(:client_id),
@@ -40,13 +45,16 @@ class SandboxAppTest < Minitest::Test
   def test_valid_post
     IMS::LTI::ToolProvider.any_instance.stubs(:valid_request?).returns(true)
     course_id = '123'
-    course_url = "accounts/#{app.send(:sandbox_account_id)}/courses"
-    app.any_instance.expects(:canvas_api)
-                           .with(:post, course_url, anything)
-                           .returns({'id' => course_id})
+    sandbox_account_id = '456'
+    app.settings.stubs(:sandbox_account_id).returns(sandbox_account_id)
 
-    enroll_url = "courses/#{course_id}/enrollments"
-    app.any_instance.expects(:canvas_api).with(:post, enroll_url, anything)
+    stub_request(:post, /accounts\/#{sandbox_account_id}\/courses/)
+      .to_return(:body => {'id' => course_id}.to_json,
+                 :headers => {'Content-Type' => 'application/json'})
+
+    stub_request(:post, /courses\/#{course_id}\/enrollments/)
+      .to_return(:body => {}.to_json,
+                 :headers => {'Content-Type' => 'application/json'})
 
     post '/', @canvas_params
 

@@ -5,7 +5,6 @@ require 'oauth/request_proxy/rack_request'
 
 class SandboxApp < WolfCore::App
   set :root, File.dirname(__FILE__)
-  set :views, ["#{root}/views", settings.base_views]
 
   post '/' do
     if valid_lti_request?(request, params) &&
@@ -18,16 +17,16 @@ class SandboxApp < WolfCore::App
           'name' => "sandbox_#{params['lis_person_name_full'].gsub(/ /, '_')}"
         }
       }
-      course = canvas_api(:post, url, {:payload => payload})
+      course = canvas_api.post(url, payload)
 
-      url = "courses/#{course['id']}/enrollments"
+      url = "courses/#{course.body['id']}/enrollments"
       payload = {
         'enrollment' => {
           'user_id' => params['custom_canvas_user_id'],
           'type' => 'TeacherEnrollment'
         }
       }
-      canvas_api(:post, url, {:payload => payload})
+      canvas_api.post(url, payload)
 
       @status = 200
     else
