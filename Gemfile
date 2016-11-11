@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'wolf_core', :git => 'https://github.com/CUOnline/wolf_core', :ref => '03ef856504'
+gem 'wolf_core', :git => 'https://github.com/CUOnline/wolf_core', :tag => 'v0.1.0'
 gem 'ims-lti', '~> 1.1'
 
 group :test, :development do
